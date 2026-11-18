@@ -1,0 +1,8 @@
+-r requirements.txt
+pymupdf
+torch
+torchvision
+transformers
+sentence-transformers
+faiss-cpu
+accelerate

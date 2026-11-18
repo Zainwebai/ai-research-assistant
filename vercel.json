@@ -1,0 +1,4 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": { "lite.py": { "maxDuration": 60 } }
+}
