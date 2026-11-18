@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Library{% endblock %}
+{% block content %}
+<script>document.body.dataset.page = "zlib";</script>
+<style>
+body[data-page="zlib"]{background:#1c1c1f}
+body[data-page="zlib"] .wrap{max-width:none;padding:0}
+.zw{display:grid;grid-template-columns:260px minmax(0,1fr) 390px;height:calc(100vh - 61px);color:#e8e8ea;font-size:.88rem}
+.zw>*{min-height:0;overflow:hidden}
+.zl{display:flex;flex-direction:column;background:#1f1f23;border-right:1px solid #333338}
+.zl h3{margin:0;padding:12px 14px 4px;font:600 .75rem Inter,sans-serif;color:#9a9aa2;letter-spacing:.04em}
+#zcols{flex:1;overflow:auto;padding:4px 8px}
+.ci{display:flex;justify-content:space-between;gap:8px;width:100%;background:none;border:0;border-radius:4px;color:#e8e8ea;padding:6px 8px;font:inherit;text-align:left;cursor:pointer}
+.ci:hover{background:#2a2a2f}.ci.on{background:#3a6df0;color:#fff}
+.ztg{height:38%;display:flex;flex-direction:column;border-top:1px solid #333338}
+#ztl{flex:1;overflow:auto;display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px 8px;padding:8px}
+.tg{background:none;border:0;color:#e8e8ea;font:inherit;cursor:pointer;padding:2px 4px;border-radius:3px}
+.tg:hover{background:#2a2a2f}.tg.on{background:#3a6df0;color:#fff}
+.zl input{margin:6px 8px;width:calc(100% - 16px)}
+.zl .row{margin:0}
+.zm{display:flex;flex-direction:column;background:#1c1c1f}
+.ztb{display:flex;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid #333338;flex-wrap:wrap}
+#zq{flex:1;min-width:150px}
+.zw input,.zw select,.zw textarea{background:#2a2a2f;color:#e8e8ea;border:1px solid #3d3d44;border-radius:4px;padding:6px 9px;font:inherit}
+.zw input::placeholder{color:#8b8b94}
+.zb{background:#2d2d33;color:#e8e8ea;border:1px solid #44444b;border-radius:4px;padding:6px 12px;font:inherit;cursor:pointer}
+.zb:hover{border-color:#7aa2ff}
+.zw :focus-visible{outline:2px solid #7aa2ff;outline-offset:1px}
+#zexp{display:flex;gap:6px}#zexp .btn{background:#2d2d33;color:#e8e8ea;border:1px solid #44444b;padding:6px 10px;border-radius:4px}
+#zexp .btn:hover{border-color:#7aa2ff;background:#2d2d33}
+.mu{color:#9a9aa2}.pad{padding:12px 14px}
+.zlist{flex:1;overflow:auto}
+#zt{width:100%;border-collapse:collapse;table-layout:fixed}
+#zt th{position:sticky;top:0;background:#1c1c1f;color:#9a9aa2;font-weight:500;text-align:left;padding:7px 10px;border-bottom:1px solid #333338;cursor:pointer;user-select:none}
+#zt th:nth-child(1){width:56%}#zt th:nth-child(3){width:70px}#zt th:nth-child(4){width:64px}
+#zt td{padding:6px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#zt tbody tr:nth-child(even){background:#222226}#zt tbody tr{cursor:pointer}
+#zt tbody tr:hover{background:#2a2a30}#zt tbody tr.on{background:#3a6df0;color:#fff}
+.ic{display:inline-block;width:9px;height:12px;border:1.5px solid #9a9aa2;border-radius:2px;margin-right:9px;vertical-align:-1px}
+tr.on .ic{border-color:#fff}
+.zr{background:#1f1f23;border-left:1px solid #333338;display:flex;flex-direction:column}
+.tabs{display:flex;border-bottom:1px solid #333338}
+.tb{flex:1;background:none;border:0;border-bottom:2px solid transparent;color:#9a9aa2;padding:10px;font:inherit;cursor:pointer}
+.tb.on{color:#fff;border-bottom-color:#7aa2ff}
+.dbody{flex:1;overflow:auto;padding:8px 0}
+.fr{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:3px 14px;line-height:1.45}
+.fr>span{text-align:right;color:#9a9aa2}.fr a{color:#7aa2ff;word-break:break-all}
+.fr select{width:100%}
+.zr h4{margin:16px 14px 6px;font:600 .8rem Inter,sans-serif;color:#9a9aa2}
+.ab{margin:0 14px;line-height:1.6}
+.zr textarea,.zr input{width:100%;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{background:#2d2d33;border-radius:999px;padding:2px 10px;font-size:.8rem}
+@media(max-width:1000px){.zw{grid-template-columns:1fr;height:auto}.zl,.zm,.zr{max-height:70vh}}
+</style>
+
+<div class="zw" id="zw">
+  <aside class="zl">
+    <h3>COLLECTIONS</h3>
+    <div id="zcols"></div>
+    <div class="row" style="padding:0 8px 8px"><button class="zb" id="zadd" style="width:100%">+ New collection</button></div>
+    <div class="ztg"><div id="ztl"></div><input id="ztf" placeholder="Filter tags" aria-label="Filter tags"></div>
+  </aside>
+  <section class="zm">
+    <div class="ztb">
+      <button class="zb" id="zimp">Import file</button>
+      <input type="file" id="zfile" accept=".csv,.ris,.bib,.bibtex,.json,.txt" hidden>
+      <input id="zq" placeholder="Title, Creator, Year" aria-label="Search your library">
+      <span id="zn" class="mu"></span>
+      <span id="zexp"></span>
+    </div>
+    <div class="zlist"><table id="zt"></table></div>
+  </section>
+  <aside class="zr" id="zd"></aside>
+</div>
+<script src="{{ url_for('static', filename='library.js') }}"></script>
+{% endblock %}

@@ -3,3 +3,7 @@ venv311/
 __pycache__/
 *.pyc
 .DS_Store
+.env
+config.py
+research_library.db
+library.json

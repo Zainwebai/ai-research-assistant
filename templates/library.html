@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Library{% endblock %}
+{% block content %}
+<h2>My Research Library</h2>
+<div class="row">
+  <input id="lq" placeholder="Search title, author, tag or note" aria-label="Search your library">
+  <select id="lcol" aria-label="Collection"></select>
+</div>
+<p id="lcount" class="muted"></p>
+<div id="lib"></div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<style>
+[hidden]{display:none!important}
+.tabs{display:flex;margin:-26px -26px 20px;border-bottom:1px solid var(--line)}
+.tab{flex:1;background:none;border:0;border-bottom:3px solid transparent;padding:14px;font:600 .95rem Inter,sans-serif;color:var(--muted);cursor:pointer}
+.tab.on{color:var(--ink);border-bottom-color:var(--brass)}
+.authbox .row .btn{flex:1}
+</style>
+
+<section class="authbox" id="auth">
+  <div class="tabs" role="tablist">
+    <button class="tab on" id="tl" role="tab" aria-selected="true">Log in</button>
+    <button class="tab" id="ts" role="tab" aria-selected="false">Create account</button>
+  </div>
+  <h2 id="ah">Welcome back</h2>
+  <p class="muted" id="ap">Log in to open your saved library.</p>
+  <label id="nmw" hidden>Name<input id="nm" autocomplete="name"></label>
+  <label>Email<input id="em" type="email" autocomplete="email"></label>
+  <label>Password<input id="pw" type="password" autocomplete="current-password"></label>
+  <label id="cf" hidden>Confirm password<input id="pc" type="password" autocomplete="new-password"></label>
+  <div class="row">
+    <button id="in" class="btn">Log in</button>
+    <button id="up" class="btn" hidden>Create account</button>
+  </div>
+</section>
+
+<script>
+(function () {
+  const $ = s => document.querySelector(s);
+  function mode(signUp) {
+    $("#tl").classList.toggle("on", !signUp);
+    $("#ts").classList.toggle("on", signUp);
+    $("#tl").setAttribute("aria-selected", !signUp);
+    $("#ts").setAttribute("aria-selected", signUp);
+    $("#nmw").hidden = !signUp;
+    $("#cf").hidden = !signUp;
+    $("#in").hidden = signUp;
+    $("#up").hidden = !signUp;
+    $("#ah").textContent = signUp ? "Create your account" : "Welcome back";
+    $("#ap").textContent = signUp ? "Add your name, email and a password of at least 6 characters." : "Log in to open your saved library.";
+    $("#pw").autocomplete = signUp ? "new-password" : "current-password";
+  }
+  $("#tl").onclick = () => mode(false);
+  $("#ts").onclick = () => mode(true);
+  if (location.hash === "#signup") mode(true);
+
+  // Checks the sign-up form first. If something is wrong, the click never reaches the sign-up code.
+  $("#auth").addEventListener("click", e => {
+    if (e.target.id !== "up") return;
+    const stop = msg => { e.stopImmediatePropagation(); flash(msg); };
+    if (!$("#nm").value.trim()) return stop("Enter your name.");
+    if (!$("#em").value.trim()) return stop("Enter your email address.");
+    if ($("#pw").value.length < 6) return stop("Use a password of at least 6 characters.");
+    if ($("#pw").value !== $("#pc").value) return stop("The two passwords don’t match.");
+  }, true);
+})();
+</script>
+{% endblock %}

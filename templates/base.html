@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %} | AI Research Assistant</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>window.CFG = {url: "{{ SB_URL }}", key: "{{ SB_KEY }}"};</script>
+<script>
+// If anything on a page breaks, show the reason at the bottom of the screen instead of failing silently.
+(function () {
+  const show = m => { const f = document.getElementById("flash"); if (f) { f.textContent = m; f.hidden = false; } };
+  addEventListener("error", e => show("Page error: " + e.message));
+  addEventListener("unhandledrejection", e => show("Page error: " + ((e.reason && e.reason.message) || e.reason)));
+})();
+</script>
+</head>
+<body data-page="{{ page }}">
+<div class="top"><div class="bar">
+  <a class="brand" href="/">AI Research <em>Assistant</em></a>
+  <nav>
+    {% for href, label, key in [("/", "Discover", "search"), ("/literature", "Literature", "literature"), ("/my-library", "Library", "mylib")] %}
+    <a href="{{ href }}" {% if page == key %}aria-current="page"{% endif %}>{{ label }}</a>
+    {% endfor %}
+  </nav>
+  <div id="acct"></div>
+</div></div>
+<main class="wrap">{% block content %}{% endblock %}</main>
+<div id="flash" role="status" hidden></div>
+<script src="{{ url_for('static', filename='site.js') }}"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

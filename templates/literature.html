@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Literature{% endblock %}
+{% block content %}
+<h2>Literature search</h2>
+<p class="muted">Pull up to 1,000 papers for any keywords, with citation counts and metrics.</p>
+<div class="filters">
+  <label class="wide">Keywords<input id="q" placeholder="low Reynolds number glider"></label>
+  <label>From year<input id="from" type="number" placeholder="2015"></label>
+  <label>To year<input id="to" type="number"></label>
+  <label>Papers<select id="n"><option>50</option><option selected>100</option><option>200</option><option>500</option><option>1000</option></select></label>
+  <label>Sort by<select id="sort"><option value="relevance_score:desc">Relevance</option><option value="cited_by_count:desc">Most cited</option><option value="publication_date:desc">Newest</option></select></label>
+  <button id="go" class="btn">Search</button>
+</div>
+<p id="st" class="muted" aria-live="polite"></p>
+<div id="metrics" class="metrics"></div>
+<div class="toolbar"><button id="save" class="btn">Save selected to Library</button><span class="muted">Export selected, or all if none ticked:</span><span id="exp"></span></div>
+<div class="tablewrap"><table id="tbl"></table></div>
+{% endblock %}

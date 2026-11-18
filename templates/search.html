@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<h2>Search the literature</h2>
+<p class="muted">Searches arXiv and Semantic Scholar together.</p>
+<div class="row">
+  <input id="q" placeholder="For example: neural networks" aria-label="Search topic">
+  <button id="go" class="btn">Search</button>
+</div>
+<p id="status" class="muted" aria-live="polite"></p>
+<div id="results"></div>
+{% endblock %}

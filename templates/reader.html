@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Read a paper{% endblock %}
+{% block content %}
+<h2>Read a paper</h2>
+<p class="muted">Upload a PDF to summarize it or ask it questions.</p>
+<input type="file" id="pdf" accept="application/pdf" aria-label="Choose a PDF">
+<p id="pinfo" class="muted" aria-live="polite"></p>
+<section id="tools" hidden>
+  <div class="row"><button id="sum" class="btn">Summarize the whole paper</button></div>
+  <div id="sumout" class="out"></div>
+  <h3>Ask the paper</h3>
+  <div class="row">
+    <input id="ask" placeholder="Ask a question about this paper" aria-label="Question">
+    <button id="askgo" class="btn">Ask</button>
+  </div>
+  <div id="ansout" class="out"></div>
+</section>
+{% endblock %}
